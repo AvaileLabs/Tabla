@@ -42,6 +42,7 @@ kotlin {
             // put your Multiplatform dependencies here
         }
         commonTest.dependencies {
+            implementation(project.dependencies.platform(libs.kotlin.bom))
             implementation(libs.kotlin.test)
         }
     }

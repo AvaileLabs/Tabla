@@ -62,9 +62,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
         }
         commonTest.dependencies {
+            implementation(project.dependencies.platform(libs.kotlin.bom))
             implementation(libs.kotlin.test)
         }
         jsMain.dependencies {
+            implementation(project.dependencies.platform(libs.kotlin.wrappers.bom))
             implementation(libs.wrappers.browser)
         }
     }
