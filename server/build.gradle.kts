@@ -8,12 +8,10 @@ plugins {
 dependencies {
     api(projects.core)
 
-    implementation(libs.spring.boot.starter.web)
-    implementation(libs.kotlin.reflect)
-
+    implementation(libs.spring.boot.starter.webmvc)
     testImplementation(libs.spring.boot.starter.test)
-    testImplementation(libs.spring.boot.webmvc.test)
-    testImplementation(libs.kotlin.testJunit5)
+
+    implementation(libs.kotlin.reflect)
 }
 
 kotlin {
