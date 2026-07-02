@@ -17,7 +17,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM
   The most important subfolder is [commonMain](./core/src/commonMain/kotlin). If preferred, you
   can add code to the platform-specific folders here too.
 
-* [/server](./server/src/main/kotlin) is for the Ktor server application.
+* [/server](./server/src/main/kotlin) is for the Spring Boot server application.
 
 ### Running the apps
 
@@ -28,7 +28,7 @@ options:
 - Desktop app:
     - Hot reload: `./gradlew :app:desktopApp:hotRun --auto`
     - Standard run: `./gradlew :app:desktopApp:run`
-- Server: `./gradlew :server:run`
+- Server: `./gradlew :server:bootRun`
 - Web app:
     - Wasm target (faster, modern browsers): `./gradlew :app:webApp:wasmJsBrowserDevelopmentRun`
     - JS target (slower, supports older browsers): `./gradlew :app:webApp:jsBrowserDevelopmentRun`

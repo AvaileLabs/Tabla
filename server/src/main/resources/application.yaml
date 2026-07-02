@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: tabla-server
+
+logging:
+  level:
+    root: info

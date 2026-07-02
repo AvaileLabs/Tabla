@@ -1,23 +1,27 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.ktor)
-}
-
-group = "com.availelabs.tabla"
-version = "1.0.0"
-application {
-    mainClass = "com.availelabs.tabla.ApplicationKt"
+    alias(libs.plugins.kotlinSpring)
+    alias(libs.plugins.springBoot)
+    alias(libs.plugins.springDependencyManagement)
 }
 
 dependencies {
     api(projects.core)
 
-    implementation(platform(libs.ktor.bom))
-    implementation(libs.logback)
-    implementation(libs.ktor.serverCore)
-    implementation(libs.ktor.serverNetty)
-    testImplementation(libs.ktor.serverTestHost)
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.kotlin.reflect)
 
-    testImplementation(platform(libs.kotlin.bom))
-    testImplementation(libs.kotlin.testJunit)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.spring.boot.webmvc.test)
+    testImplementation(libs.kotlin.testJunit5)
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

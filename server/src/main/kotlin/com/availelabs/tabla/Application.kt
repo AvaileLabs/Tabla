@@ -1,20 +1,20 @@
 package com.availelabs.tabla
 
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
+@SpringBootApplication
+class TablaServerApplication
+
+fun main(args: Array<String>) {
+    runApplication<TablaServerApplication>(*args)
 }
 
-fun Application.module() {
-    routing {
-        get("/") {
-            call.respondText(sayHello("Ktor"))
-        }
-    }
+@RestController
+class GreetingController {
+
+    @GetMapping("/")
+    fun root(): String = sayHello("Spring Boot")
 }

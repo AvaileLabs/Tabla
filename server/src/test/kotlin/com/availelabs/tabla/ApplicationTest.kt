@@ -1,20 +1,25 @@
 package com.availelabs.tabla
 
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.server.testing.*
-import kotlin.test.*
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class ApplicationTest {
 
+    @Autowired
+    lateinit var mockMvc: MockMvc
+
     @Test
-    fun testRoot() = testApplication {
-        application {
-            module()
-        }
-        val response = client.get("/")
-        assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals("Hello, Ktor!", response.bodyAsText())
+    fun testRoot() {
+        mockMvc.perform(get("/"))
+            .andExpect(status().isOk)
+            .andExpect(content().string("Hello, Spring Boot!"))
     }
 }
