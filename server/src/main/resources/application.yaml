@@ -2,6 +2,10 @@ spring:
   application:
     name: tabla-server
 
+  docker:
+    compose:
+      file: server/compose.yaml
+
 logging:
   level:
     root: info
