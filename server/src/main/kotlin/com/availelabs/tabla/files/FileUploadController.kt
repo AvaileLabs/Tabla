@@ -38,8 +38,9 @@ internal class FileUploadController(
 
             is FileStorageResult.Failure -> {
                 val status = when (result.error) {
-                    FileStorageError.EMPTY_FILE -> HttpStatus.BAD_REQUEST
+                    FileStorageError.EMPTY_FILE,
                     FileStorageError.MISSING_CONTENT_TYPE -> HttpStatus.BAD_REQUEST
+
                     FileStorageError.UNSUPPORTED_FILE_TYPE -> HttpStatus.UNSUPPORTED_MEDIA_TYPE
                 }
 
