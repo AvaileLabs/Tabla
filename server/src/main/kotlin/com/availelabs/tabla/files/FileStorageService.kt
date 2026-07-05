@@ -35,6 +35,7 @@ internal class FileStorageService {
         val fileName = file.originalFilename ?: "unknown"
 
         val storedFile = StoredFile(
+            // database should generate the UUID, not the app
             id = Uuid.random(),
             name = fileName,
             type = fileType,

@@ -9,10 +9,12 @@ dependencies {
     api(projects.core)
 
     implementation(libs.spring.boot.starter.webmvc)
+    implementation(libs.exposed.spring.boot4.starter)
     testImplementation(libs.spring.boot.starter.test)
 
     implementation(libs.kotlin.reflect)
     developmentOnly(libs.spring.boot.docker.compose)
+    runtimeOnly(libs.postgresql)
 }
 
 kotlin {

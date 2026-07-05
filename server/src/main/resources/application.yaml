@@ -2,9 +2,17 @@ spring:
   application:
     name: tabla-server
 
+  threads:
+    virtual:
+      enabled: true
+
   docker:
     compose:
       file: server/compose.yaml
+  
+  exposed:
+    generate-ddl: true
+    show-sql: true
 
 logging:
   level:
