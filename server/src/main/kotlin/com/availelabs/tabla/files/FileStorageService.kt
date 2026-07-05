@@ -9,7 +9,7 @@ import kotlin.io.path.isWritable
 import kotlin.uuid.Uuid
 
 @Service
-internal class FileStorageService {
+class FileStorageService {
     private val uploadDir: Path = Path.of("uploads")
 
     init {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import kotlin.uuid.Uuid
 
-internal sealed interface FileUploadResponse {
+sealed interface FileUploadResponse {
     data class Success(
         val id: Uuid,
         val name: String,
@@ -22,7 +22,7 @@ internal sealed interface FileUploadResponse {
 }
 
 @RestController
-internal class FileUploadController(
+class FileUploadController(
     private val fileStorageService: FileStorageService
 ) {
     @PostMapping("/upload", consumes = ["multipart/form-data"])

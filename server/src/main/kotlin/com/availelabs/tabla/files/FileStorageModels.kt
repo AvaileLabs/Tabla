@@ -2,7 +2,7 @@ package com.availelabs.tabla.files
 
 import kotlin.uuid.Uuid
 
-internal enum class FileType(
+enum class FileType(
     val contentTypes: Set<String>
 ) {
     IMAGE(setOf("image/jpeg", "image/png", "image/webp")),
@@ -16,19 +16,19 @@ internal enum class FileType(
     }
 }
 
-internal data class StoredFile(
+data class StoredFile(
     val id: Uuid,
     val name: String,
     val type: FileType,
     val size: Long
 )
 
-internal sealed interface FileStorageResult {
+sealed interface FileStorageResult {
     data class Success(val storedFile: StoredFile) : FileStorageResult
     data class Failure(val error: FileStorageError) : FileStorageResult
 }
 
-internal enum class FileStorageError(
+enum class FileStorageError(
     val message: String
 ) {
     EMPTY_FILE("Empty file"),
