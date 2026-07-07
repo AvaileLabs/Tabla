@@ -1,0 +1,12 @@
+<input
+  #fileInput
+  (change)="fileInput.files && onFilesSelected(fileInput.files)"
+  multiple
+  type="file"
+>
+
+<ul>
+  @for (file of selectedFiles(); track file) {
+    <li>{{ file.name }}</li>
+  }
+</ul>
