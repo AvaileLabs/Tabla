@@ -32,36 +32,46 @@ class S3ObjectStorage(
         contentLength: Long,
         contentType: String,
         openStream: () -> InputStream
-    ): Result<Unit> = try {
-        val request = PutObjectRequest.builder()
-            .bucket(bucketName)
-            .key(key)
-            .contentType(contentType)
-            .contentLength(contentLength)
-            .build()
+    ): Result<Unit> {
+        require(key.isNotBlank()) { "Object key must not be blank" }
+        require(contentLength >= 0) { "Content length must not be negative" }
+        require(contentType.isNotBlank()) { "Content type must not be blank" }
 
-        openStream().use { stream ->
-            val body = RequestBody.fromInputStream(stream, contentLength)
-            s3Client.putObject(request, body)
+        return try {
+            val request = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .contentType(contentType)
+                .contentLength(contentLength)
+                .build()
+
+            openStream().use { stream ->
+                val body = RequestBody.fromInputStream(stream, contentLength)
+                s3Client.putObject(request, body)
+            }
+
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(ObjectStorageException("Could not store object '$key' in S3", exception))
         }
-
-        Result.success(Unit)
-    } catch (exception: Exception) {
-        Result.failure(ObjectStorageException("Could not store object '$key' in S3", exception))
     }
 
-    override fun delete(key: String): Result<Unit> = try {
+    override fun delete(key: String): Result<Unit> {
         require(key.isNotBlank()) { "Object key must not be blank" }
 
-        val request = DeleteObjectRequest.builder()
-            .bucket(bucketName)
-            .key(key)
-            .build()
+        return try {
+            require(key.isNotBlank()) { "Object key must not be blank" }
 
-        s3Client.deleteObject(request)
+            val request = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build()
 
-        Result.success(Unit)
-    } catch (exception: Exception) {
-        Result.failure(ObjectStorageException("Could not delete object '$key' from S3", exception))
+            s3Client.deleteObject(request)
+
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(ObjectStorageException("Could not delete object '$key' from S3", exception))
+        }
     }
 }
