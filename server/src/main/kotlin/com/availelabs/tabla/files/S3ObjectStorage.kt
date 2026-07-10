@@ -46,9 +46,6 @@ class S3ObjectStorage(
         }
 
         Result.success(Unit)
-    } catch (exception: InterruptedException) {
-        Thread.currentThread().interrupt()
-        throw exception
     } catch (exception: Exception) {
         Result.failure(ObjectStorageException("Could not store object '$key' in S3", exception))
     }
@@ -64,9 +61,6 @@ class S3ObjectStorage(
         s3Client.deleteObject(request)
 
         Result.success(Unit)
-    } catch (exception: InterruptedException) {
-        Thread.currentThread().interrupt()
-        throw exception
     } catch (exception: Exception) {
         Result.failure(ObjectStorageException("Could not delete object '$key' from S3", exception))
     }
