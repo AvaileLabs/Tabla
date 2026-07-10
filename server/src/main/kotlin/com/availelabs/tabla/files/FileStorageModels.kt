@@ -21,7 +21,10 @@ data class StoredFile(
     val name: String,
     val type: FileType,
     val size: Long
-)
+) {
+    val objectKey: String
+        get() = "files/$id"
+}
 
 sealed interface FileStorageResult {
     data class Success(val storedFile: StoredFile) : FileStorageResult
