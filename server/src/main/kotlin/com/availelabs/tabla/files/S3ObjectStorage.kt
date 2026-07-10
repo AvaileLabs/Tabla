@@ -60,8 +60,6 @@ class S3ObjectStorage(
         require(key.isNotBlank()) { "Object key must not be blank" }
 
         return try {
-            require(key.isNotBlank()) { "Object key must not be blank" }
-
             val request = DeleteObjectRequest.builder()
                 .bucket(bucketName)
                 .key(key)
