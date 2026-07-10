@@ -15,6 +15,11 @@ dependencies {
     implementation(libs.kotlin.reflect)
     developmentOnly(libs.spring.boot.docker.compose)
     runtimeOnly(libs.postgresql)
+
+
+    implementation(platform(libs.aws.sdk.bom))
+    implementation(libs.aws.sdk.s3)
+    testImplementation(libs.s3mock.testcontainers)
 }
 
 kotlin {
