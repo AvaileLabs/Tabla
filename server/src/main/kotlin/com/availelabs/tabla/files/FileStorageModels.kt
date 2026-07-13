@@ -25,16 +25,3 @@ data class StoredFile(
     val objectKey: String
         get() = "files/$id"
 }
-
-sealed interface FileStorageResult {
-    data class Success(val storedFile: StoredFile) : FileStorageResult
-    data class Failure(val error: FileStorageError) : FileStorageResult
-}
-
-enum class FileStorageError(
-    val message: String
-) {
-    EMPTY_FILE("Empty file"),
-    MISSING_CONTENT_TYPE("Missing content type"),
-    UNSUPPORTED_FILE_TYPE("Unsupported file type"),
-}
