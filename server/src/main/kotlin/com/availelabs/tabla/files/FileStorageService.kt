@@ -1,5 +1,7 @@
 package com.availelabs.tabla.files
 
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.services.s3.S3Client
@@ -8,6 +10,12 @@ import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.isWritable
 import kotlin.uuid.Uuid
+
+@Configuration
+class S3ClientContainer {
+    @Bean
+    fun s3ClientBean(): S3Client = S3Client.builder().build()
+}
 
 @Service
 class FileStorageService(private val s3Client: S3Client) {
