@@ -6,34 +6,22 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.services.s3.S3Client
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import kotlin.io.path.isWritable
 import kotlin.uuid.Uuid
 
 @Configuration
-class S3ClientContainer {
+class S3Configuration {
     @Bean
-    fun s3ClientBean(): S3Client = S3Client.builder().build()
+    fun s3Client(): S3Client = S3Client.builder().build()
 }
 
 @Service
 class FileStorageService(private val s3Client: S3Client) {
-    private val uploadDir: Path = Path.of("uploads")
-
-    init {
-        Files.createDirectories(uploadDir)
-
-        require(Files.isDirectory(uploadDir)) {
-            "Upload path is not a directory: $uploadDir"
-        }
-
-        require(uploadDir.isWritable()) { "Upload directory is not writable" }
-    }
-
-    fun store(file: MultipartFile): FileStorageResult {
+    fun store(file: MultipartFile) {
         if (file.isEmpty)
-            return FileStorageResult.Failure(FileStorageError.EMPTY_FILE)
+            return Fi
+
+        FileStorageResult.Failure(FileStorageError.EMPTY_FILE)
 
         val contentType = file.contentType
             ?: return FileStorageResult.Failure(FileStorageError.MISSING_CONTENT_TYPE)
