@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.services.s3.S3Client
-import java.nio.file.Files
-import java.nio.file.StandardOpenOption
+import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Configuration
@@ -17,9 +16,10 @@ class S3Configuration {
 
 @Service
 class FileStorageService(private val s3Client: S3Client) {
-    fun store(file: MultipartFile) {
+    @OptIn(ExperimentalUuidApi::class)
+    fun store(file: MultipartFile): FileStorageResult {
         if (file.isEmpty)
-            return Fi
+            return FileStorageResult.Failure(FileStorageError.EMPTY_FILE)
 
         FileStorageResult.Failure(FileStorageError.EMPTY_FILE)
 
@@ -32,21 +32,12 @@ class FileStorageService(private val s3Client: S3Client) {
         val fileName = file.originalFilename ?: "unknown"
 
         val storedFile = StoredFile(
-            // database should generate the UUID, not the app
-            id = Uuid.random(),
+            id = Uuid.generateV7(),
             name = fileName,
             type = fileType,
             size = file.size
         )
-
-        val destination = uploadDir.resolve(storedFile.id.toString())
-
-        file.inputStream.use { input ->
-            Files.newOutputStream(destination, StandardOpenOption.CREATE_NEW).use { output ->
-                input.copyTo(output)
-            }
-        }
-
+        
         return FileStorageResult.Success(storedFile)
     }
 }
